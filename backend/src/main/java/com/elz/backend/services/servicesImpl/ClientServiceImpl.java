@@ -7,6 +7,7 @@ import com.elz.backend.mappers.ClientMapper;
 import com.elz.backend.repository.ClientRepository;
 import com.elz.backend.services.ClientService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,13 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Setter
+
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+
     private final ClientMapper clientMapper;
+
     @Override
     public void createClient(ClientDto clientDto) {
 
@@ -27,8 +32,9 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> clientDansleBD=clientRepository.findByEmail(clientDto.getEmail());
 
         if (clientDansleBD.isEmpty()){
-            log.info("Création d'un nouveau client : {}" , clientDto);
+            //log.info("Création d'un nouveau client : {}" , clientDto);
             clientRepository.save(clientMapper.mapToClientEntity(clientDto));
+           // clientRepository.save(clientDto.mapToEntity(clientDto));
         }
     }
 
@@ -36,7 +42,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientDto getClientById(Integer id) throws ClientNotFoundException {
 
         Client client = this.clientRepository.findById(id).orElse(null);
-        //log.info("Client Id is null");
+            //log.info("Client Id is null");
         if (client==null) throw new ClientNotFoundException("Client not Found");
         ClientDto clientDto=clientMapper.mapToClientDto(client);
 
@@ -54,11 +60,12 @@ public class ClientServiceImpl implements ClientService {
             return null;
         }
         return clientMapper.mapToListClientDto(clientList);
+        //return clientList.stream().map(ClientDto::mapToDto).collect(Collectors.toList());
 
     }
 
     @Override
-    public void updateClient(int id,ClientDto clientDto) {
+    public void updateClient(Integer id,ClientDto clientDto) {
         Optional<Client> clientDansBdd= clientRepository.findById(id);
         if (clientDansBdd.isPresent()){
             if (clientDansBdd.get().getIdClient()==clientDto.getIdClient()){

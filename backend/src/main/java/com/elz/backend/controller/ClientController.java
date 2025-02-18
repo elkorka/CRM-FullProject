@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ClientDto getClientById(@PathVariable int id ) throws ClientNotFoundException {
+    public ClientDto getClientById(@PathVariable Integer id ) throws ClientNotFoundException {
         return clientServiceImpl.getClientById(id);
     }
 
@@ -44,12 +44,12 @@ public class ClientController {
     }
 
     @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE)
-    public void updateClient(@PathVariable int id, @RequestBody ClientDto clientDto){
+    public void updateClient(@PathVariable Integer id, @RequestBody ClientDto clientDto){
         this.clientServiceImpl.updateClient(id,clientDto);
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteClientById(@PathVariable int id) throws ClientNotFoundException {
+    public void deleteClientById(@PathVariable Integer id) throws ClientNotFoundException {
         this.clientServiceImpl.deleteClientById(id);
     }
 
