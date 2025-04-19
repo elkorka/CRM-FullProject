@@ -1,13 +1,41 @@
 package com.elz.backend.entities;
 
-import javax.swing.*;
-import java.util.Date;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+
+import java.time.LocalDateTime;
+
+@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "produit")
 public class Produit {
-    private int idProduit;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idProduit;
+
+    @Column(nullable = false)
     private String nom;
-    private float prix;
-    private Spring description;
-    private Date created_at;
-    private Date update_at;
+
+    @Column(unique = true,nullable = false)
+    private String code;
+
+    @Column(nullable = false)
+    private double prix;
+
+    private String description;
+
+    @CreationTimestamp
+    @Column(name = "createdAt", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
 }

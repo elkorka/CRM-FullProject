@@ -1,6 +1,8 @@
 package com.elz.backend.dto;
 
-import com.elz.backend.entities.Client;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,16 @@ import java.time.LocalDateTime;
 public class ClientDto {
     private int idClient;
 
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 1, max = 50, message = "Le nom doit contenir entre 1 et 50 caractères")
     private String nom;
 
+    @NotBlank(message = "Le prenom est obligatoire")
+    @Size(min = 1, max = 100, message = "Le nom doit contenir entre 1 et 100 caractères")
     private String prenom;
 
+    @NotBlank(message = "L'email est obligatoire")
+    @Email(message = "Format d'email invalide")
     private String email;
 
     private String telephone;

@@ -1,16 +1,17 @@
 package com.elz.backend.services;
 
+import com.elz.backend.Exceptions.ClientAlreadyExistsException;
 import com.elz.backend.Exceptions.ClientNotFoundException;
 import com.elz.backend.dto.ClientDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 public interface ClientService {
-    void createClient(ClientDto clientDto);
-    ClientDto getClientById(Integer id) throws ClientNotFoundException;
+    ClientDto createClient(ClientDto clientDto) throws ClientAlreadyExistsException;
+    ClientDto getClientById(Long id) throws ClientNotFoundException;
+//    List<ClientDto> searchClient(String nom);
     List<ClientDto> getAllClient();
-    void updateClient(Integer id,ClientDto clientDto);
-    void deleteClientById(Integer id) throws ClientNotFoundException;
+    ClientDto updateClient(Long id,ClientDto clientDto) throws ClientNotFoundException, ClientAlreadyExistsException;
+    void deleteClientById(Long id) throws ClientNotFoundException;
 
 }

@@ -17,12 +17,13 @@ import java.time.LocalDateTime;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "idClient")
-    private int idClient;
+    @Column(name = "idClient")
+    private Long idClient;
 
     @Column(nullable = false)
     private String nom;
 
+    @Column(nullable = false)
     private String prenom;
 
     @Column(unique = true, nullable = false)
@@ -32,7 +33,7 @@ public class Client {
     private String adresse;
 
     @CreationTimestamp
-    @Column( updatable = false)
+    @Column( updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
