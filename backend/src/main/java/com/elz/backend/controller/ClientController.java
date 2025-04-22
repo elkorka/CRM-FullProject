@@ -3,6 +3,7 @@ package com.elz.backend.controller;
 import com.elz.backend.Exceptions.ClientAlreadyExistsException;
 import com.elz.backend.Exceptions.ClientNotFoundException;
 import com.elz.backend.dto.ClientDto;
+import com.elz.backend.services.ClientService;
 import com.elz.backend.services.servicesImpl.ClientServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Slf4j
 public class ClientController {
 
-    private final ClientServiceImpl clientServiceImpl;
+    private final ClientService clientService;
 
-    public ClientController(ClientServiceImpl clientServiceImpl) {
-        this.clientServiceImpl = clientServiceImpl;
+    public ClientController(ClientServiceImpl clientService) {
+        this.clientService = clientService;
     }
 
 
@@ -30,13 +31,13 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ClientDto> createClient(@Valid @RequestBody ClientDto client) throws ClientAlreadyExistsException {
 
-            clientServiceImpl.createClient(client);
+            clientService.createClient(client);
             return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
 
     @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ClientDto getClientById(@PathVariable(name = "id") Long id ) throws ClientNotFoundException {
-        return clientServiceImpl.getClientById(id);
+        return clientService.getClientById(id);
     }
 
 //    @GetMapping("/search")
@@ -46,17 +47,17 @@ public class ClientController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ClientDto>> getAllClient(){
-        return ResponseEntity.ok(this.clientServiceImpl.getAllClient());
+        return ResponseEntity.ok(this.clientService.getAllClient());
     }
 
     @PutMapping(path = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public void updateClient(@PathVariable(name = "id") Long id,@Valid @RequestBody ClientDto clientDto) throws ClientNotFoundException, ClientAlreadyExistsException {
-        this.clientServiceImpl.updateClient(id,clientDto);
+        this.clientService.updateClient(id,clientDto);
     }
 
     @DeleteMapping(path = "/{id}")
     public void deleteClientById(@PathVariable(name = "id") Long id) throws ClientNotFoundException {
-        this.clientServiceImpl.deleteClientById(id);
+        this.clientService.deleteClientById(id);
     }
 
 }

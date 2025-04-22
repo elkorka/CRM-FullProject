@@ -3,6 +3,7 @@ package com.elz.backend.controller;
 import com.elz.backend.Exceptions.PreduitAlreadyExistException;
 import com.elz.backend.Exceptions.ProduitNotFoundException;
 import com.elz.backend.dto.ProduitDto;
+import com.elz.backend.services.ProduitService;
 import com.elz.backend.services.servicesImpl.ProduitServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/v1/produit")
 public class ProduitController {
-    private final ProduitServiceImpl produitService;
+    private final ProduitService produitService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
